@@ -1,10 +1,10 @@
 <template>
   <!-- 顶部搜索区域 -->
-  <home-nav></home-nav>
+  <home-nav />
   <!-- 主体内容区域 -->
-  <home-main class="home-main"></home-main>
+  <home-main class="home-main" />
   <!-- 底部导航区域 -->
-  <layout-footer></layout-footer>
+  <layout-footer />
 </template>
 
 <script setup>

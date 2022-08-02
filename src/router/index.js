@@ -46,12 +46,14 @@ const routes = [
     path: '/order',
     name: 'order',
     component: () => import('@/views/Order/index.vue'),
+    props: true,
     meta: { requireAuth: true }
   },
   {
     path: '/order-comfirm',
     name: 'order-comfirm',
     component: () => import('@/views/OrderComfirm/index.vue'),
+    props: true,
     meta: { requireAuth: true }
   },
   {
@@ -65,6 +67,13 @@ const routes = [
     path: '/pay',
     name: 'pay',
     component: () => import('@/views/Pay/index.vue'),
+    meta: { requireAuth: true }
+  },
+  {
+    path: '/address',
+    name: 'address',
+    component: () => import('@/views/Address/index.vue'),
+    props: true,
     meta: { requireAuth: true }
   },
   {
@@ -115,7 +124,7 @@ router.beforeEach(to => {
     return true
   }
 
-  if (!store.state.user || !window.localStorage.getItem('USER_TOKEN')) {
+  if (!store.state.user.token || !window.localStorage.getItem('USER_TOKEN')) {
     return {
       name: 'login',
       query: {

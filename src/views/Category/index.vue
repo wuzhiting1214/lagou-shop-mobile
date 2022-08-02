@@ -1,6 +1,6 @@
 <template>
   分类页面
-  <layout-footer></layout-footer>
+  <layout-footer />
 </template>
 
 <script setup>

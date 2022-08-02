@@ -1,58 +1,158 @@
 <template>
   <div class="container">
     <div class="header">
-      <img src="https://i-1-lanrentuku.52tup.com/2020/11/5/8cc3854a-c8bd-456a-8b36-9209de3ccbfb.png?imageView2/2/w/1024/" alt="">
+      <img
+        :src="userAvatar"
+        alt=""
+      >
       <div class="user-info">
-        <div class="user-name">小吴</div>
-        <div class="user-id">ID: 3</div>
+        <div
+          class="user-name"
+          v-text="username"
+        />
+        <div
+          class="user-id"
+          v-text="userId"
+        />
       </div>
-      <van-icon name="setting-o" size="24"></van-icon>
+      <van-icon
+        name="setting-o"
+        size="24"
+      />
     </div>
     <div class="main">
-      <van-cell-group inset class="user-detail">
+      <van-cell-group
+        inset
+        class="user-detail"
+      >
         <van-cell>
           <van-grid :border="false">
-            <van-grid-item text="1">
-              <template #icon>收藏</template>
+            <van-grid-item :text="collectCount">
+              <template #icon>
+                收藏
+              </template>
             </van-grid-item>
-            <van-grid-item text="555">
-              <template #icon>积分</template>
+            <van-grid-item :text="integral">
+              <template #icon>
+                积分
+              </template>
             </van-grid-item>
-            <van-grid-item text="10">
-              <template #icon>优惠券</template>
+            <van-grid-item :text="couponCount">
+              <template #icon>
+                优惠券
+              </template>
             </van-grid-item>
-            <van-grid-item text="0">
-              <template #icon>余额</template>
+            <van-grid-item :text="now_money">
+              <template #icon>
+                余额
+              </template>
             </van-grid-item>
           </van-grid>
         </van-cell>
       </van-cell-group>
       <van-cell-group inset>
-        <van-cell title="订单中心" value="查看全部" is-link to="/order" />
+        <van-cell
+          title="订单中心"
+          value="查看全部"
+          is-link
+          to="/order"
+        />
         <van-cell>
-          <van-grid :border="false" column-num="5">
-            <van-grid-item icon="bill-o" text="待付款" />
-            <van-grid-item icon="tosend" text="待发货" />
-            <van-grid-item icon="logistics" text="待收货" />
-            <van-grid-item icon="comment-o" text="待评价" />
-            <van-grid-item icon="sign" text="已完成" />
+          <van-grid
+            :border="false"
+            column-num="5"
+            to="/order"
+          >
+            <van-grid-item
+              icon="bill-o"
+              text="待付款"
+              :to="{
+                name: 'order',
+                params: {
+                  typeNum: 0
+                }
+              }"
+            />
+            <van-grid-item
+              icon="tosend"
+              text="待发货"
+              :to="{
+                name: 'order',
+                params: {
+                  typeNum: 1
+                }
+              }"
+            />
+            <van-grid-item
+              icon="logistics"
+              text="待收货"
+              :to="{
+                name: 'order',
+                params: {
+                  typeNum: 2
+                }
+              }"
+            />
+            <van-grid-item
+              icon="comment-o"
+              text="待评价"
+              :to="{
+                name: 'order',
+                params: {
+                  typeNum: 3
+                }
+              }"
+            />
+            <van-grid-item
+              icon="sign"
+              text="已完成"
+              :to="{
+                name: 'order',
+                params: {
+                  typeNum: 4
+                }
+              }"
+            />
           </van-grid>
         </van-cell>
       </van-cell-group>
     </div>
-    <layout-footer></layout-footer>  
-  </div>  
+    <layout-footer />
+  </div>
 </template>
 
 <script setup>
+import {
+  Icon as VanIcon,
+  CellGroup as VanCellGroup,
+  Cell as VanCell,
+  Grid as VanGrid,
+  GridItem as VanGridItem,
+} from 'vant'
 import LayoutFooter from '@/components/LayoutFooter.vue'
 import { getUserInfo } from '@/api/user'
 import { ref } from '@vue/reactivity'
+import { computed } from '@vue/runtime-core'
 
 const userdata = ref({})
+// 用户头像
+const userAvatar = computed(() => userdata.value?.switchUserInfo?.[0].avator || 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi-1.lanrentuku.com%2F2020%2F11%2F5%2Fdef6ed04-6d34-402e-99c8-366266f627dd.png%3FimageView2%2F2%2Fw%2F500&refer=http%3A%2F%2Fi-1.lanrentuku.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654442915&t=3ca554dc0601995db249e49d7755af0d')
+// 用户昵称
+const username = computed(() => userdata.value?.nickname || '')
+// 用户id
+const userId = computed(() => 'ID: ' + (userdata.value?.uid || ''))
+// 收藏
+const collectCount = computed(() => userdata.value?.collectCount?.toString() || '')
+// 积分
+const integral = computed(() => userdata.value?.integral?.toString() || '')
+// 优惠券
+const couponCount = computed(() => userdata.value?.couponCount?.toString() || '')
+// 余额
+const now_money = computed(() => userdata.value?.now_money || '')
 
 const loadUserData = async () => {
   const { data } = await getUserInfo()
+  userdata.value = data.data
   console.log(data)
 }
 loadUserData()

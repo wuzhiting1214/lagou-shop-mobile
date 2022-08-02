@@ -16,14 +16,14 @@ export const getVerify = data => request({
 // 密码登录
 export const loginByPassword = data => request({
   method: 'POST',
-  url :'/login',
+  url: '/login',
   data
 })
 
 // 验证码登录
 export const loginByCapcha = data => request({
   method: 'POST',
-  url :'/login/mobile',
+  url: '/login/mobile',
   data
 })
 

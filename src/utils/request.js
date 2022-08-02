@@ -8,10 +8,10 @@ const request = axios.create({
 })
 
 request.interceptors.request.use(config => {
-  const { user } = store.state
-  if (user) {
+  const { token } = store.state.user
+  if (token) {
     // 设置请求头
-    config.headers.Authorization = 'Bearer ' + user
+    config.headers.Authorization = 'Bearer ' + token
   }
   return config
 })

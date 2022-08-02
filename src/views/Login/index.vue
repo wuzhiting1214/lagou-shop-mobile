@@ -1,7 +1,10 @@
 <template>
   <van-form @submit="onSubmit">
     <van-cell-group inset>
-      <img :src="state.logoUrl" alt="">
+      <img
+        :src="state.logoUrl"
+        alt=""
+      >
       <van-field
         v-model="state.username"
         name="用户名"
@@ -31,32 +34,45 @@
             size="small"
             type="primary"
             @click="sendVerify"
-            :disabled="state.isSend"  
-          >{{ state.currentText }}</van-button>
+            :disabled="state.isSend"
+          >
+            {{ state.currentText }}
+          </van-button>
         </template>
       </van-field>
     </van-cell-group>
     <div style="margin: 16px;">
-      <van-button round block type="primary" native-type="submit">
+      <van-button
+        round
+        block
+        type="primary"
+        native-type="submit"
+      >
         登录
       </van-button>
       <span
         v-text="state.changeText"
         class="change-button"
-        @click="changeMode"  
-      ></span>
+        @click="changeMode"
+      />
     </div>
   </van-form>
 </template>
 
 <script setup>
-import { reactive } from "@vue/reactivity"
-import { computed } from "@vue/runtime-core"
+import {
+  Form as VanForm,
+  CellGroup as VanCellGroup,
+  Field as VanField,
+  Button as VanButton
+} from 'vant'
+import { reactive } from '@vue/reactivity'
+import { computed } from '@vue/runtime-core'
 import { getVerifyCode, getVerify, loginByPassword, loginByCapcha } from '@/api/user'
-import { Toast } from "vant"
+import { Toast } from 'vant'
 import { useCountDown } from '@vant/use'
 import { useStore } from 'vuex'
-import { useRouter, useRoute } from "vue-router"
+import { useRouter, useRoute } from 'vue-router'
 import { getLogo } from '@/api/index'
 
 const store = useStore()
@@ -116,8 +132,8 @@ const onSubmit = async () => {
   }
   // 将信息存储到store中
   Toast('登录成功')
-  store.commit('setUser', data.data.token)  
-  router.push('/user')
+  store.commit('user/setUser', data.data.token)
+  router.push(route.query.redirect || '/user')
 }
 
 // 验证码
@@ -135,7 +151,7 @@ const sendVerify = async () => {
     key: v1.data.key
   })
   if (v2.status !== 200) {
-    return Toast('网络出小差了，请稍后再试')    
+    return Toast('网络出小差了，请稍后再试')
   }
   const countDown = useCountDown({
     time: 10 * 1000,

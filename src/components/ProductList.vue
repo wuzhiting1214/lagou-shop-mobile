@@ -17,20 +17,32 @@
       }"
     >
       <van-image :src="item.image" />
-      <p class="title" v-text="item.store_name"></p>
-      <p class="price">￥{{item.price}}</p>
-      <p class="sales">已售{{item.sales}}件</p>
+      <p
+        class="title"
+        v-text="item.store_name"
+      />
+      <p class="price">
+        ￥{{ item.price }}
+      </p>
+      <p class="sales">
+        已售{{ item.sales }}件
+      </p>
     </van-grid-item>
   </van-grid>
 </template>
 
 <script setup>
-  const { productDatas } = defineProps({
-    productDatas: {
-      type: Array,
-      required: true
-    }
-  }) 
+import {
+  Grid as VanGrid,
+  GridItem as VanGridItem,
+  Image as VanImage
+} from 'vant'
+const { productDatas } = defineProps({
+  productDatas: {
+    type: Array,
+    required: true
+  }
+})
 
 </script>
 

@@ -20,7 +20,7 @@ export const getCommentCount = productId => request({
 })
 
 // 请求不同类型的评论数据
-export const getCommentByTag = (productId,params) => request({
+export const getCommentByTag = (productId, params) => request({
   method: 'GET',
   url: `/reply/list/${productId}`,
   params

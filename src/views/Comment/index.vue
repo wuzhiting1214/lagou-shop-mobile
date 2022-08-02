@@ -11,47 +11,69 @@
       class="header"
       title="商品评价"
       :value="`好评率: ${ state.reply_chance }%`"
-    ></van-cell>
+    />
     <!-- 标签切换区域 -->
     <van-cell class="tags">
       <van-button
         size="small"
         :class="{ active: state.isSum }"
         @click="handleTag('0')"
-      >全部({{ state.sum_count }})</van-button>
+      >
+        全部({{ state.sum_count }})
+      </van-button>
       <van-button
         size="small"
         :class="{ active: state.isGood }"
         @click="handleTag('1')"
-      >好评({{ state.good_count }})</van-button>
+      >
+        好评({{ state.good_count }})
+      </van-button>
       <van-button
         size="small"
         :class="{ active: state.isIn }"
         @click="handleTag('2')"
-      >中评({{ state.in_count }})</van-button>
+      >
+        中评({{ state.in_count }})
+      </van-button>
       <van-button
         size="small"
         :class="{ active: state.isPoor }"
         @click="handleTag('3')"
-      >差评({{ state.poor_count }})</van-button>
+      >
+        差评({{ state.poor_count }})
+      </van-button>
     </van-cell>
     <!-- 评价列表 -->
-    <div v-if="state.hasComment" class="content">
+    <div
+      v-if="state.hasComment"
+      class="content"
+    >
       <comment-item
         v-for="item in state.commentList"
         :key="item.id"
         :reply="item"
-      ></comment-item>
+      />
     </div>
     <!-- 当没有评价时，进行空结构展示 -->
-    <van-empty v-else description="暂时没有评价" class="content"/>
+    <van-empty
+      v-else
+      description="暂时没有评价"
+      class="content"
+    />
   </van-cell-group>
 </template>
 
 <script setup>
+import {
+  CellGroup as VanCellGroup,
+  NavBar as VanNavBar,
+  Cell as VanCell,
+  Button as VanButton,
+  Empty as VanEmpty
+} from 'vant'
 import CommentItem from '@/components/CommentItem.vue'
 import { useRouter } from 'vue-router'
-import { getCommentCount, getCommentByTag} from '@/api/product'
+import { getCommentCount, getCommentByTag } from '@/api/product'
 import { reactive } from '@vue/reactivity'
 import { computed } from '@vue/runtime-core'
 const router = useRouter()
@@ -88,10 +110,10 @@ const state = reactive({
   hasComment: computed(() => state.commentList.length || 0)
 })
 // 切换评价的类型
-  const handleTag = (typeNum) => {
-    state.active = typeNum
-    initReplyByTag(typeNum)
-  }
+const handleTag = (typeNum) => {
+  state.active = typeNum
+  initReplyByTag(typeNum)
+}
 
 // 获取评价数量
 async function initReplyDatas () {
@@ -108,7 +130,7 @@ async function initReplyByTag (type) {
   state.commentList = data.data
   console.log(state.commentList)
 }
-initReplyByTag ('0')
+initReplyByTag('0')
 </script>
 
 <style lang="scss" scoped>

@@ -2,29 +2,49 @@
   <van-cell class="comment-item">
     <!-- 1.用户信息 -->
     <div class="userinfo">
-      <img :src="reply?.avatar" alt="">
-      <span class="username">{{reply?.nickname}}</span>
-      <van-rate v-model="star" readonly size="12"></van-rate>
+      <img
+        :src="reply?.avatar"
+        alt=""
+      >
+      <span class="username">{{ reply?.nickname }}</span>
+      <van-rate
+        v-model="star"
+        readonly
+        size="12"
+      />
     </div>
     <!-- 2.评价时间与规格 -->
-    <p class="time">{{reply?.add_time}} {{reply?.sku}}</p>
+    <p class="time">
+      {{ reply?.add_time }} {{ reply?.sku }}
+    </p>
     <!-- 3.评价内容 -->
-    <p class="content">{{reply?.comment}}</p>
+    <p class="content">
+      {{ reply?.comment }}
+    </p>
     <!-- 4.评价图片 -->
-    <ul class="picture" v-if="reply?.pics">
+    <ul
+      class="picture"
+      v-if="reply?.pics"
+    >
       <li
         v-for="(item,index) in pics"
         :key="index"
       >
-        <img :src="item" alt="">
+        <img
+          :src="item"
+          alt=""
+        >
       </li>
     </ul>
   </van-cell>
 </template>
 
 <script setup>
-import { computed } from "@vue/runtime-core"
-
+import {
+  Cell as VanCell,
+  Rate as VanRate
+} from 'vant'
+import { computed } from '@vue/runtime-core'
 
 const { reply } = defineProps({
   reply: {

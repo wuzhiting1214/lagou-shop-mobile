@@ -1,14 +1,23 @@
 <template>
   <div class="home-nav">
-    <img height="20" src="@/assets/logo.png" alt="">
+    <img
+      src="@/assets/logo.png"
+      alt=""
+    >
     <div class="search">
-      <van-icon name="search" size="20"/>
+      <van-icon
+        name="search"
+        size="20"
+      />
     </div>
-    <van-icon name="wap-nav"></van-icon>
+    <van-icon name="wap-nav" />
   </div>
 </template>
 
 <script setup>
+import {
+  Icon as VanIcon
+} from 'vant'
 </script>
 
 <style lang="scss" scoped>
@@ -23,9 +32,10 @@
   background-color: #fff;
 
   img {
+    height: 20px;
     padding: 0 10px;
   }
-  
+
   .search {
     width: 100%;
     background-color: #f7f7f7;

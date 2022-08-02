@@ -1,13 +1,24 @@
 <template>
-  <van-pull-refresh class="home-main" v-model="refreshing" @refresh="onRefresh">
-  <!-- <div class="home-main"> -->
+  <van-pull-refresh
+    class="home-main"
+    v-model="refreshing"
+    @refresh="onRefresh"
+  >
+    <!-- <div class="home-main"> -->
     <!-- 轮播图区域 -->
-    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+    <van-swipe
+      class="my-swipe"
+      :autoplay="3000"
+      indicator-color="white"
+    >
       <van-swipe-item
         v-for="(item,index) in swipeData"
         :key="index"
       >
-        <img :src="item.img" alt="">
+        <img
+          :src="item.img"
+          alt=""
+        >
       </van-swipe-item>
     </van-swipe>
     <!-- 菜单导航区域 -->
@@ -19,10 +30,14 @@
         v-for="(item,index) in menusData"
         :key="index"
         :icon="item.img"
-        :text="item.info[0].value" />
+        :text="item.info[0].value"
+      />
     </van-grid>
     <!-- 公告区域 -->
-    <van-notice-bar left-icon="volume-o" :scrollable="false">
+    <van-notice-bar
+      left-icon="volume-o"
+      :scrollable="false"
+    >
       <span>热点资讯公告：</span>
       <van-swipe
         vertical
@@ -34,7 +49,7 @@
           v-for="(item,index) in newsData"
           :key="index"
           v-text="item.chiild[0].val"
-        ></van-swipe-item>
+        />
       </van-swipe>
     </van-notice-bar>
     <!-- 商品列表区域 -->
@@ -46,13 +61,22 @@
     >
       <product-list
         :product-datas="productDatas"
-      ></product-list>
+      />
     </van-list>
   <!-- </div> -->
   </van-pull-refresh>
 </template>
 
 <script setup>
+import {
+  Swipe as VanSwipe,
+  SwipeItem as VanSwipeItem,
+  Grid as VanGrid,
+  GridItem as VanGridItem,
+  NoticeBar as VanNoticeBar,
+  List as VanList,
+  PullRefresh as VanPullRefresh
+} from 'vant'
 import ProductList from '@/components/ProductList.vue'
 import { ref, computed } from 'vue'
 import { getDafaultDate } from '@/api/index'
@@ -80,7 +104,7 @@ const newsData = computed(() => indexData.value.news?.default.newList.list)
 
 // ----首页商品信息数据----
 let page = 1
-let limit = 4
+const limit = 4
 const productDatas = ref([])
 const loading = ref(false)
 const finished = ref(false)
@@ -93,7 +117,7 @@ const initProductDatas = async () => {
   productDatas.value.push(...data.data)
   loading.value = false
 
-  if(data.data.length < limit) {
+  if (data.data.length < limit) {
     return finished.value = true
   }
   page++
@@ -109,7 +133,6 @@ const onRefresh = () => {
   finished.value = false
   initIndexData()
   initProductDatas()
-
 }
 
 </script>
